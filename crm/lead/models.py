@@ -23,40 +23,40 @@ class DefaultAssignedTo(models.Model):
 
 class Lead(models.Model):
     salutation = models.CharField(
-        max_length=5, choices=SALUTATION_CHOICES, null=True, blank=True)
+        max_length=5, choices=SALUTATION_CHOICES, blank=True)
     first_name = models.CharField(max_length=100, blank=False)
     last_name = models.CharField(max_length=100, blank=False)
     primary_email = models.EmailField(unique=True, blank=False)
-    phone = models.CharField(max_length=20, null=True, blank=True)
+    phone = models.CharField(max_length=20, blank=True)
     title = models.ForeignKey(
         Title, on_delete=models.CASCADE, null=True, blank=True)
     company = models.CharField(
-        max_length=100, unique=False, null=True, blank=True)
+        max_length=100, unique=False, blank=True)
     legal_nature = models.CharField(
         max_length=10, choices=LEGAL_NATURE_CHOICES, default='Private')
-    website = models.URLField(null=True, blank=True)
+    website = models.URLField(blank=True)
     lead_source = models.CharField(
-        max_length=100, choices=LEAD_SOURCE_CHOICES, null=True, blank=True)
+        max_length=100, choices=LEAD_SOURCE_CHOICES, blank=True)
     lead_status = models.CharField(
         max_length=100, choices=LEAD_STATUS_CHOICES, default='New')
-    last_contacted_on = models.DateField(null=True, blank=True)
+    last_contacted_on = models.DateField(blank=True)
     last_contacted_via = models.CharField(
-        max_length=20, choices=LAST_CONTACTED_VIA_CHOICES, null=True, blank=True)
+        max_length=20, choices=LAST_CONTACTED_VIA_CHOICES, blank=True)
     currency = models.ForeignKey(
-        Currency, on_delete=models.CASCADE, null=True, blank=True)
-    record_conversion_rate = models.FloatField(null=True, blank=True)
+        Currency, on_delete=models.CASCADE, blank=True)
+    record_conversion_rate = models.FloatField(blank=True)
     country = models.ForeignKey(Country, on_delete=models.CASCADE, blank=False)
-    address = models.CharField(max_length=255, null=True, blank=True)
-    zip_code = models.CharField(max_length=20, null=True, blank=True)
-    postal_code = models.CharField(max_length=20, null=True, blank=True)
-    city = models.CharField(max_length=100, null=True, blank=True)
-    state = models.CharField(max_length=100, null=True, blank=True)
+    address = models.CharField(max_length=255, blank=True)
+    zip_code = models.CharField(max_length=20, blank=True)
+    postal_code = models.CharField(max_length=20, blank=True)
+    city = models.CharField(max_length=100, blank=True)
+    state = models.CharField(max_length=100, blank=True)
     product_category = models.ForeignKey(
-        ProductCategory, on_delete=models.CASCADE, null=True, blank=True)
-    product_name = models.CharField(max_length=100, null=True, blank=True)
+        ProductCategory, on_delete=models.CASCADE, blank=True)
+    product_name = models.CharField(max_length=100, blank=True)
     product_website = models.URLField(blank=True)
     provider = models.ForeignKey(
-        Provider, on_delete=models.CASCADE, null=True, blank=True)
+        Provider, on_delete=models.CASCADE, blank=True)
     description = models.TextField(blank=False)
     assigned_to = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name='assigned_leads', on_delete=models.SET_NULL, null=True, blank=False)
