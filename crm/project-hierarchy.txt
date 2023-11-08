@@ -1,0 +1,86 @@
+crm_blastingexperts
+├─ .gitignore
+├─ choices
+│  ├─ choices.py
+│  └─ choices_country.py
+├─ config
+│  ├─ asgi.py
+│  └─ urls.py
+├─ core
+│  ├─ admin.py
+│  ├─ apps.py
+│  ├─ models.py
+│  ├─ templates
+│  │  ├─ base.html
+│  │  └─ navbar.html
+│  ├─ tests.py
+│  └─ views.py
+├─ crm.zip
+├─ dashboard
+│  ├─ admin.py
+│  ├─ apps.py
+│  ├─ models.py
+│  ├─ templates
+│  │  ├─ 404.html
+│  │  ├─ dashboard_home.html
+│  │  └─ login_home.html
+│  ├─ tests.py
+│  ├─ urls.py
+│  └─ views.py
+├─ deal
+│  ├─ admin.py
+│  ├─ apps.py
+│  ├─ models.py
+│  ├─ tests.py
+│  └─ views.py
+├─ lead
+│  ├─ admin copy.py
+│  ├─ admin.py
+│  ├─ apps.py
+│  ├─ forms copy.py
+│  ├─ forms.py
+│  ├─ models copy.py
+│  ├─ models.py
+│  ├─ signals.py
+│  ├─ templates
+│  │  ├─ add_lead.html
+│  │  ├─ add_lead_authenticated.html
+│  │  ├─ add_lead_unauthenticated.html
+│  │  ├─ leads_detail.html
+│  │  └─ list_lead.html
+│  ├─ tests.py
+│  ├─ urls.py
+│  ├─ views copy.py
+│  └─ views.py
+├─ option
+│  ├─ admin.py
+│  ├─ apps.py
+│  ├─ models.py
+│  ├─ tests.py
+│  └─ views.py
+├─ organization
+│  ├─ admin.py
+│  ├─ apps.py
+│  ├─ models.py
+│  ├─ tests.py
+│  └─ views.py
+├─ requirements.txt
+├─ static
+│  ├─ css
+│  │  └─ be_crm.css
+│  └─ js
+│     ├─ be_crm_datatable copy.js
+│     └─ be_crm_datatable.js
+├─ task
+│  ├─ admin.py
+│  ├─ apps.py
+│  ├─ models.py
+│  ├─ tests.py
+│  └─ views.py
+├─ temporal.html
+└─ userprofile
+   ├─ admin.py
+   ├─ apps.py
+   ├─ models.py
+   ├─ tests.py
+   └─ views.py

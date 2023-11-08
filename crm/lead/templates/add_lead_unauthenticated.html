@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block title %}Leads{% endblock %}
+
+{% block content %}
+
+<h1 class="text-xl">Add Lead Unauthenticated</h1>
+
+<form action="." method="post" class="">
+    {% csrf_token %}
+    <div class="row mb-3">
+        <div class="col-md-2 hide-field">
+            <label for="addLeadRegisterSalutation" class="form-label">&nbsp;</label>
+            {{ form.salutation }}
+        </div>
+        <div class="col-md-5">
+            <label for="addLeadRegisterFirstName" class="form-label">Nombre</label>
+            {{ form.first_name }}
+        </div>
+        <div class="col-md-5">
+            <label for="addLeadRegisterLastName" class="form-label">Apellido</label>
+            {{ form.last_name }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <label for="addLeadRegisterEmail" class="form-label">Email</label>
+            {{ form.primary_email }}
+        </div>
+        <div class="col-md-4">
+            <label for="addLeadRegisterPhone" class="form-label">Telefono</label>
+            {{ form.phone }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <label for="addLeadRegisterCompany" class="form-label hide-field">Empresa</label>
+            {{ form.company }}
+        </div>
+        <div class="col-md-2 hide-field">
+            <label for="addLeadRegisterLegaNature" class="form-label">&nbsp;</label>
+            {{ form.legal_nature }}
+        </div>
+        <div class="col-md-2 hide-field">
+            <label for="addLeadRegisterTitle" class="form-label">Cargo</label>
+            {{ form.title }}
+        </div>
+    </div>
+    <div class="row mb-3 hide-field">
+        <div class="col-md-8">
+            <label for="addLeadRegisterWebsite" class="form-label">Empresa Website</label>
+            {{ form.website }}
+        </div>
+    </div>
+    <div class="row mb-3 hide-field">
+        <div class="col-md-4">
+            <label for="addLeadRegisterLeadSource" class="form-label">Lead Source</label>
+            {{ form.lead_source }}
+        </div>
+    </div>
+    <div class="row mb-3 hide-field">
+        <div class="col-md-5">
+            <label for="addLeadRegisterLastContactedOn" class="form-label">Ultimo contacto</label>
+            {{ form.last_contacted_on }}
+        </div>
+        <div class="col-md-3">
+            <label for="addLeadRegisterLastContactedVia" class="form-label">Ultimo contacto via</label>
+            {{ form.last_contacted_via }}
+        </div>
+    </div>
+    <div class="row mb-3 hide-field">
+        <div class="col-md-2">
+            <label for="addLeadRegisterCurrency" class="form-label">Moneda</label>
+            {{ form.currency }}
+        </div>
+        <div class="col-md-3">
+            <label for="addLeadRegisterRecordConversionRate" class="form-label">Moneda Rate</label>
+            {{ form.record_conversion_rate }}
+        </div>
+        <div class="col-md-3">
+            <label for="" class="form-label">&nbsp;</label>
+            {{ form.record_conversion_rate }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label for="addLeadRegisterCountry" class="form-label">Country</label>
+            {{ form.country }}
+        </div>
+        <div class="col-md-4">
+            <label for="addLeadRegisterCity" class="form-label">City</label>
+            {{ form.city }}
+        </div>
+        <div class="col-md-4 hide-field">
+            <label for="addLeadRegisterState" class="form-label">State</label>
+            {{ form.state }}
+        </div>
+    </div>
+    <div class="row mb-3 hide-field">
+        <div class="col-md-8">
+            <label for="addLeadRegisterAddress" class="form-label">Address</label>
+            {{ form.address }}
+        </div>
+        <div class="col-md-2">
+            <label for="addLeadRegisterZipCode" class="form-label">Zip Code</label>
+            {{ form.zip_code }}
+        </div>
+        <div class="col-md-2">
+            <label for="addLeadRegisterPostalCode" class="form-label">Postal Code</label>
+            {{ form.postal_code }}
+        </div>
+    </div>
+
+    <div class="row mb-3 hide-field">
+        <div class="col-md-8">
+            <label for="addLeadRegisterWebsite" class="form-label">URL Producto</label>
+            {{ form.product_website }}
+        </div>
+        <div class="col-md-4">
+            <label for="addLeadRegisterProvider" class="form-label">Proveedor</label>
+            {{ form.provider }}
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <label for="addLeadRegisterDescription" class="form-label">Descripcion</label>
+            {{ form.description }}
+        </div>
+    </div>
+    <div class="row mb-3 hide-field">
+        <div class="col-md-5">
+            <label for="addLeadRegisterAssignedTo" class="form-label">Assigned to</label>
+            {{ form.assigned_to }}
+        </div>
+    </div>
+
+    <br>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<br><br><br>
+
+
+{% endblock %}
+

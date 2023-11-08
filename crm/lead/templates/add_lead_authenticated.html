@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block title %}Leads{% endblock %}
+
+{% block content %}
+
+<h1 class="text-xl">Add Lead authenticated</h1>
+
+<form action="." method="post" class="">
+    {% csrf_token %}
+    <div class="row mb-3">
+        <div class="col-md-2">
+            <label for="formGroupExampleInput2" class="form-label">&nbsp;</label>
+            {{ form.salutation }}
+        </div>
+        <div class="col-md-5">
+            <label for="formGroupExampleInput2" class="form-label">Nombre</label>
+            {{ form.first_name }}
+        </div>
+        <div class="col-md-5">
+            <label for="formGroupExampleInput2" class="form-label">Apellido</label>
+            {{ form.last_name }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <label for="formGroupExampleInput2" class="form-label">Email</label>
+            {{ form.primary_email }}
+        </div>
+        <div class="col-md-4">
+            <label for="formGroupExampleInput2" class="form-label">Telefono</label>
+            {{ form.phone }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <label for="formGroupExampleInput2" class="form-label">Empresa</label>
+            {{ form.company }}
+        </div>
+        <div class="col-md-2">
+            <label for="formGroupExampleInput2" class="form-label">&nbsp;</label>
+            {{ form.legal_nature }}
+        </div>
+        <div class="col-md-2">
+            <label for="formGroupExampleInput2" class="form-label">Cargo</label>
+            {{ form.title }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <label for="formGroupExampleInput2" class="form-label">Empresa Website</label>
+            {{ form.website }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label for="formGroupExampleInput2" class="form-label">Lead Source</label>
+            {{ form.lead_source }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-5">
+            <label for="formGroupExampleInpu2" class="form-label">Ultimo contacto</label>
+            {{ form.last_contacted_on }}
+        </div>
+        <div class="col-md-3">
+            <label for="formGroupExampleInput2" class="form-label">Ultimo contacto via</label>
+            {{ form.last_contacted_via }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-2">
+            <label for="formGroupExampleInpu2" class="form-label">Moneda</label>
+            {{ form.currency }}
+        </div>
+        <div class="col-md-3">
+            <label for="formGroupExampleInput2" class="form-label">Moneda Rate</label>
+            <label for="formGroupExampleInput2" class="form-label"></label>
+            {{ form.record_conversion_rate }}
+        </div>
+        <div class="col-md-3">
+            <label for="formGroupExampleInput2" class="form-label">&nbsp;</label>
+            {{ form.record_conversion_rate }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label for="formGroupExampleInput2" class="form-label">Country</label>
+            {{ form.country }}
+        </div>
+        <div class="col-md-4">
+            <label for="formGroupExampleInput2" class="form-label">City</label>
+            {{ form.city }}
+        </div>
+        <div class="col-md-4">
+            <label for="formGroupExampleInput2" class="form-label">State</label>
+            {{ form.state }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <label for="formGroupExampleInput2" class="form-label">Address</label>
+            {{ form.address }}
+        </div>
+        <div class="col-md-2">
+            <label for="formGroupExampleInput2" class="form-label">Zip Code</label>
+            {{ form.zip_code }}
+        </div>
+        <div class="col-md-2">
+            <label for="formGroupExampleInput2" class="form-label">Postal Code</label>
+            {{ form.postal_code }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <label for="formGroupExampleInput2" class="form-label">Producto</label>
+            {{ form.product_name }}
+        </div>
+        <div class="col-md-4">
+            <label for="formGroupExampleInput2" class="form-label">Categoria</label>
+            {{ form.product_category }}
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <label for="formGroupExampleInput2" class="form-label">URL Producto</label>
+            {{ form.product_website }}
+        </div>
+        <div class="col-md-4">
+            <label for="formGroupExampleInput2" class="form-label">Proveedor</label>
+            {{ form.provider }}
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <label for="formGroupExampleInput2" class="form-label">Descripcion</label>
+            {{ form.description }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-5">
+            <label for="formGroupExampleInput2" class="form-label">Assigned to</label>
+            {{ form.assigned_to }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-5 alert alert-secondary" role="alert">
+            <label for="formGroupExampleInput2" class="form-label">Lead Status</label>
+            {{ form.lead_status }}
+        </div>
+    </div>
+    <br>
+    <button class="">Submit</button>
+</form>
+
+{% endblock %}

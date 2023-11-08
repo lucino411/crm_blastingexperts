@@ -1,0 +1,34 @@
+.table_leads {
+    width: 100% !important;
+}
+
+.centered {
+    text-align: center !important;
+    vertical-align: middle !important; 
+}
+
+.tfoot {
+    /* color: rgb(100, 100, 100) !important; */
+
+
+}
+
+
+.dtb-b3 {
+    width: fit-content !important;
+    padding: 20px !important;
+}
+
+
+td.highlight {
+    background-color: whitesmoke !important;
+}
+
+html.dark td.highlight {
+    background-color: rgba(var(--dt-row-hover), 0.082) !important;
+}
+
+/* unauthenticated template */
+.hide-field {
+    display: none !important;
+}
