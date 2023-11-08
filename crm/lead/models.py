@@ -39,12 +39,12 @@ class Lead(models.Model):
         max_length=100, choices=LEAD_SOURCE_CHOICES, blank=True)
     lead_status = models.CharField(
         max_length=100, choices=LEAD_STATUS_CHOICES, default='New')
-    last_contacted_on = models.DateField(blank=True)
+    last_contacted_on = models.DateField(blank=True, null=True)
     last_contacted_via = models.CharField(
         max_length=20, choices=LAST_CONTACTED_VIA_CHOICES, blank=True)
     currency = models.ForeignKey(
-        Currency, on_delete=models.CASCADE, blank=True)
-    record_conversion_rate = models.FloatField(blank=True)
+        Currency, on_delete=models.CASCADE, blank=True, null=True)
+    record_conversion_rate = models.FloatField(blank=True, null=True)
     country = models.ForeignKey(Country, on_delete=models.CASCADE, blank=False)
     address = models.CharField(max_length=255, blank=True)
     zip_code = models.CharField(max_length=20, blank=True)
@@ -52,11 +52,11 @@ class Lead(models.Model):
     city = models.CharField(max_length=100, blank=True)
     state = models.CharField(max_length=100, blank=True)
     product_category = models.ForeignKey(
-        ProductCategory, on_delete=models.CASCADE, blank=True)
+        ProductCategory, on_delete=models.CASCADE, blank=True, null=True)
     product_name = models.CharField(max_length=100, blank=True)
     product_website = models.URLField(blank=True)
     provider = models.ForeignKey(
-        Provider, on_delete=models.CASCADE, blank=True)
+        Provider, on_delete=models.CASCADE, blank=True, null=True)
     description = models.TextField(blank=False)
     assigned_to = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name='assigned_leads', on_delete=models.SET_NULL, null=True, blank=False)
@@ -81,16 +81,6 @@ class Lead(models.Model):
             default_assigned_to_instance = DefaultAssignedTo.objects.first()
             if default_assigned_to_instance:
                 self.assigned_to = default_assigned_to_instance.user
-
-        # if not self.assigned_to and not self.pk:
-        #     try:
-        #         default_assigned_to_instance = DefaultAssignedTo.objects.first()
-        #         if default_assigned_to_instance:
-        #             self.assigned_to = default_assigned_to_instance.user
-        #         else:
-        #             self.assigned_to = self.created_by
-        #     except ObjectDoesNotExist:
-        #         pass
 
         super().save(*args, **kwargs)
 
