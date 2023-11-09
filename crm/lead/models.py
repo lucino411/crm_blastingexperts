@@ -7,12 +7,19 @@ from option.models import Title, Currency, ProductCategory, Provider, Country
 from userprofile.models import CustomUser
 
 
+def get_sentinel_user():
+    user, created = CustomUser.objects.get_or_create(username="deleted")
+    if created:
+        # Si se crea un nuevo usuario, establece los otros campos según sea necesario
+        user.set_unusable_password()
+        user.save()
+    return user
+
 class DefaultCreatedBy(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"
-
 
 class DefaultAssignedTo(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
@@ -20,13 +27,13 @@ class DefaultAssignedTo(models.Model):
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"
 
-
 class Lead(models.Model):
     salutation = models.CharField(
         max_length=5, choices=SALUTATION_CHOICES, blank=True)
     first_name = models.CharField(max_length=100, blank=False)
     last_name = models.CharField(max_length=100, blank=False)
-    primary_email = models.EmailField(unique=True, blank=False)
+    primary_email = models.EmailField(unique=True, blank=False, help_text="Please use the following format: <em>YYYY-MM-DD</em>."
+                                      )
     phone = models.CharField(max_length=20, blank=True)
     title = models.ForeignKey(
         Title, on_delete=models.CASCADE, null=True, blank=True)
@@ -59,13 +66,13 @@ class Lead(models.Model):
         Provider, on_delete=models.CASCADE, blank=True, null=True)
     description = models.TextField(blank=False)
     assigned_to = models.ForeignKey(
-        settings.AUTH_USER_MODEL, related_name='assigned_leads', on_delete=models.SET_NULL, null=True, blank=False)
+        settings.AUTH_USER_MODEL, related_name='assigned_leads', on_delete=models.SET(get_sentinel_user), blank=False)
     created_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL, related_name='created_leads', on_delete=models.SET_NULL, null=True)
+        settings.AUTH_USER_MODEL, related_name='created_leads', on_delete=models.SET(get_sentinel_user))
     created_time = models.DateTimeField(auto_now_add=True)
     modified_time = models.DateTimeField(auto_now=True)
     last_modified_by = models.ForeignKey(
-        settings.AUTH_USER_MODEL, related_name='last_modified_leads', on_delete=models.SET_NULL, null=True)
+        settings.AUTH_USER_MODEL, related_name='last_modified_leads', on_delete=models.SET(get_sentinel_user))
     is_closed = models.BooleanField(default=False)
     erased = models.BooleanField(default=False)
     pipeline = models.CharField(max_length=100, default='Standard')
