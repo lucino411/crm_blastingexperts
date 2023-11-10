@@ -64,7 +64,7 @@ class AddLeadFormForRegistered(forms.ModelForm):
             'last_contacted_on': forms.DateInput(attrs={'type': 'date', 'class': 'form-control', 'format': '%Y-%m-%d'})
         }
 
-class AddLeadFormForUnregistered(forms.ModelForm):
+class AddLeadFormForAnonymous(forms.ModelForm):
     salutation = forms.ChoiceField(choices=SALUTATION_CHOICES, required=False, widget=forms.Select(attrs={'class': 'form-select', 'id': 'addLeadUnregisterSalutation'}))
     first_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control', 'id': "addLeadUnregisterFirstName"}), required=True)
     last_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control', 'id': "addLeadUnregisterLastName" }), required=True,)
@@ -91,7 +91,7 @@ class AddLeadFormForUnregistered(forms.ModelForm):
 
 
     def __init__(self, *args, **kwargs):
-        super(AddLeadFormForUnregistered, self).__init__(*args, **kwargs)
+        super(AddLeadFormForAnonymous, self).__init__(*args, **kwargs)
         # self.fields['first_name'].widget.attrs['class'] = 'form-control'
         # self.fields['first_name'].widget.attrs['placeholder'] = 'First Name'
         # self.fields['last_name'].widget.attrs['class'] = 'form-control'
