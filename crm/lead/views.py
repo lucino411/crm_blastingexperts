@@ -18,11 +18,17 @@ from userprofile.models import CustomUser
 from lead.models import DefaultCreatedBy, DefaultAssignedTo
 
 
+''' 
+/************
+LIST LEADS
+/************
+'''
+
 @login_required
 def homeLead(request):
     context = {}
     context['titulo'] = 'Gestion de Leads'
-    return render(request, 'list_lead.html', context)
+    return render(request, 'leads/list_lead.html', context)
 
 # @login_required
 class LeadListView(ListView):
@@ -105,6 +111,12 @@ get_context_data se utiliza principalmente para agregar datos adicionales al con
 Es una forma útil de ampliar el contexto que se pasa a la plantilla con datos específicos que pueden no estar directamente relacionados con el queryset del modelo. Esto proporciona flexibilidad en la presentación de datos y la lógica de la plantilla, permitiéndote personalizar la información que se muestra según las necesidades específicas de tu aplicación.
 '''
 
+''' 
+/************
+ADD LEAD
+/************
+'''
+
 @user_passes_test(lambda u: u.is_active and (u.is_staff or u.is_superuser))
 @login_required
 def add_lead(request):
@@ -124,7 +136,7 @@ def add_lead(request):
         form = AddLeadFormForRegistered()
         form.fields['country'].queryset = Country.objects.filter(
             is_selected=True)  # Aplicar el filtro en el formulario
-    return render(request, 'add_lead_authenticated.html', {'form': form})
+    return render(request, 'leads/add_lead_authenticated.html', {'form': form})
 
 def add_lead_unauthenticated(request):
     if request.method == 'POST':
@@ -161,7 +173,7 @@ def add_lead_unauthenticated(request):
         form = AddLeadFormForUnregistered()
         form.fields['country'].queryset = Country.objects.filter(
             is_selected=True)  # Aplicar el filtro en el formulario
-    return render(request, 'add_lead_unauthenticated.html', {'form': form})
+    return render(request, 'leads/add_lead_unauthenticated.html', {'form': form})
 
 
 @login_required
@@ -171,9 +183,7 @@ def leads_detail(request, pk):
     # lead = Lead.objects.get(pk=pk)
 
     lead = Lead.objects.get(id=pk)  # Obtener el lead de la base de datos
-    form = AddLeadFormForUnregistered(instance=lead)  # Pasar los datos del lead al formulario
-    context = {'form': form}
-    return render(request, 'leads_detail.html', context)
-
-
-    # return render(request, 'leads_detail.html', {'lead': lead})
+    # form = AddLeadFormForUnregistered(instance=lead)  # Pasar los datos del lead al formulario
+    # context = {'form': form}
+    context = {'lead': lead}
+    return render(request, 'leads/leads_detail.html', context)

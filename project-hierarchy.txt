@@ -1,0 +1,95 @@
+blastingexperts
+└─ crm
+   ├─ choices
+   │  ├─ choices.py
+   │  └─ choices_country.py
+   ├─ config
+   │  ├─ asgi.py
+   │  ├─ db.py
+   │  ├─ settings.py
+   │  └─ urls.py
+   ├─ core
+   │  ├─ admin.py
+   │  ├─ apps.py
+   │  ├─ models.py
+   │  ├─ templates1
+   │  │  ├─ base.html
+   │  │  └─ navbar.html
+   │  ├─ tests.py
+   │  └─ views.py
+   ├─ dashboard
+   │  ├─ admin.py
+   │  ├─ apps.py
+   │  ├─ models.py
+   │  ├─ templates1
+   │  │  ├─ 404.html
+   │  │  ├─ dashboard_home.html
+   │  │  └─ login_home.html
+   │  ├─ tests.py
+   │  ├─ urls.py
+   │  └─ views.py
+   ├─ deal
+   │  ├─ admin.py
+   │  ├─ apps.py
+   │  ├─ models.py
+   │  ├─ tests.py
+   │  └─ views.py
+   ├─ lead
+   │  ├─ admin.py
+   │  ├─ apps.py
+   │  ├─ forms.py
+   │  ├─ models.py
+   │  ├─ signals.py
+   │  ├─ templates1
+   │  │  ├─ add_lead.html
+   │  │  ├─ add_lead_authenticated.html
+   │  │  ├─ add_lead_unauthenticated.html
+   │  │  ├─ leads_detail.html
+   │  │  └─ list_lead.html
+   │  ├─ tests.py
+   │  ├─ urls.py
+   │  └─ views.py
+   ├─ option
+   │  ├─ admin.py
+   │  ├─ apps.py
+   │  ├─ models.py
+   │  ├─ tests.py
+   │  └─ views.py
+   ├─ organization
+   │  ├─ admin.py
+   │  ├─ apps.py
+   │  ├─ models.py
+   │  ├─ tests.py
+   │  └─ views.py
+   ├─ static
+   │  ├─ css
+   │  │  └─ be_crm.css
+   │  ├─ img
+   │  └─ js
+   │     └─ be_crm_datatable.js
+   ├─ task
+   │  ├─ admin.py
+   │  ├─ apps.py
+   │  ├─ models.py
+   │  ├─ tests.py
+   │  └─ views.py
+   ├─ templates
+   │  ├─ core
+   │  │  ├─ base.html
+   │  │  └─ navbar.html
+   │  ├─ dashboard
+   │  │  ├─ 404.html
+   │  │  ├─ dashboard_home.html
+   │  │  └─ login_home.html
+   │  └─ leads
+   │     ├─ add_lead.html
+   │     ├─ add_lead_authenticated.html
+   │     ├─ add_lead_unauthenticated.html
+   │     ├─ leads_detail.html
+   │     └─ list_lead.html
+   └─ userprofile
+      ├─ admin.py
+      ├─ apps.py
+      ├─ models.py
+      ├─ tests.py
+      └─ views.py

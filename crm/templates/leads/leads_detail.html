@@ -1,0 +1,156 @@
+{% extends "core/base.html" %}
+
+{% block title %}Leads{% endblock %}
+
+{% block content %}
+
+<h1 class="text-xl">Lead Detail</h1>
+
+
+    <div class="row mb-3">
+        <div class="col-md-2">
+            <label for="leadGroupExampleInput2" class="lead-label">&nbsp;</label>
+            {{ lead.salutation }}
+        </div>
+        <div class="col-md-5">
+            <label for="leadGroupExampleInput2" class="lead-label">Nombre</label>
+            {{ lead.first_name }}
+        </div>
+        <div class="col-md-5">
+            <label for="leadGroupExampleInput2" class="lead-label">Apellido</label>
+            {{ lead.last_name }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <label for="leadGroupExampleInput2" class="lead-label">Email</label>
+            {{ lead.primary_email }}
+        </div>
+        <div class="col-md-4">
+            <label for="leadGroupExampleInput2" class="lead-label">Telefono</label>
+            {{ lead.phone }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <label for="leadGroupExampleInput2" class="lead-label">Empresa</label>
+            {{ lead.company }}
+        </div>
+        <div class="col-md-2">
+            <label for="leadGroupExampleInput2" class="lead-label">&nbsp;</label>
+            {{ lead.legal_nature }}
+        </div>
+        <div class="col-md-2">
+            <label for="leadGroupExampleInput2" class="lead-label">Cargo</label>
+            {{ lead.title }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <label for="leadGroupExampleInput2" class="lead-label">Empresa Website</label>
+            {{ lead.website }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label for="leadGroupExampleInput2" class="lead-label">Lead Source</label>
+            {{ lead.lead_source }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-5">
+            <label for="leadGroupExampleInpu2" class="lead-label">Ultimo contacto</label>
+            {{ lead.last_contacted_on }}
+        </div>
+        <div class="col-md-3">
+            <label for="leadGroupExampleInput2" class="lead-label">Ultimo contacto via</label>
+            {{ lead.last_contacted_via }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-2">
+            <label for="leadGroupExampleInpu2" class="lead-label">Moneda</label>
+            {{ lead.currency }}
+        </div>
+        <div class="col-md-3">
+            <label for="leadGroupExampleInput2" class="lead-label">Moneda Rate</label>
+            <label for="leadGroupExampleInput2" class="lead-label"></label>
+            {{ lead.record_conversion_rate }}
+        </div>
+        <div class="col-md-3">
+            <label for="leadGroupExampleInput2" class="lead-label">&nbsp;</label>
+            {{ lead.record_conversion_rate }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <label for="leadGroupExampleInput2" class="lead-label">Country</label>
+            {{ lead.country }}
+        </div>
+        <div class="col-md-4">
+            <label for="leadGroupExampleInput2" class="lead-label">City</label>
+            {{ lead.city }}
+        </div>
+        <div class="col-md-4">
+            <label for="leadGroupExampleInput2" class="lead-label">State</label>
+            {{ lead.state }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <label for="leadGroupExampleInput2" class="lead-label">Address</label>
+            {{ lead.address }}
+        </div>
+        <div class="col-md-2">
+            <label for="leadGroupExampleInput2" class="lead-label">Zip Code</label>
+            {{ lead.zip_code }}
+        </div>
+        <div class="col-md-2">
+            <label for="leadGroupExampleInput2" class="lead-label">Postal Code</label>
+            {{ lead.postal_code }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <label for="leadGroupExampleInput2" class="lead-label">Producto</label>
+            {{ lead.product_name }}
+        </div>
+        <div class="col-md-4">
+            <label for="leadGroupExampleInput2" class="lead-label">Categoria</label>
+            {{ lead.product_category }}
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-8">
+            <label for="leadGroupExampleInput2" class="lead-label">URL Producto</label>
+            {{ lead.product_website }}
+        </div>
+        <div class="col-md-4">
+            <label for="leadGroupExampleInput2" class="lead-label">Proveedor</label>
+            {{ lead.provider }}
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <label for="leadGroupExampleInput2" class="lead-label">Descripcion</label>
+            {{ lead.description }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-5">
+            <label for="leadGroupExampleInput2" class="lead-label">Assigned to</label>
+            {{ lead.assigned_to }}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col-md-5 alert alert-secondary" role="alert">
+            <label for="leadGroupExampleInput2" class="lead-label">Lead Status</label>
+            {{ lead.lead_status }}
+        </div>
+    </div>
+
+
+
+{% endblock %}

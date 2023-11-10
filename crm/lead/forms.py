@@ -1,4 +1,5 @@
 from django import forms
+
 from .models import Lead
 from choices.choices import SALUTATION_CHOICES, LEGAL_NATURE_CHOICES, LEAD_SOURCE_CHOICES, LEAD_STATUS_CHOICES, LAST_CONTACTED_VIA_CHOICES
 from option.models import Title, Currency, ProductCategory, Provider, Country
@@ -99,7 +100,6 @@ class AddLeadFormForUnregistered(forms.ModelForm):
         #     'class': 'form-control',
         #     'type': 'datetime-local'
         # })
-
     def as_row(self):
         return self._html_output(
             normal_row='<div class="row">'

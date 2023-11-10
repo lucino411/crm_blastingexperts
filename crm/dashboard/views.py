@@ -8,7 +8,7 @@ from django.contrib import messages
 
 @login_required
 def dashboard(request):
-    return render(request, 'dashboard_home.html')
+    return render(request, 'dashboard/dashboard_home.html')
 
 
 def login_user(request):
@@ -27,7 +27,7 @@ def login_user(request):
                 request, 'There was and Error Loggin In, Plesae try again')
             return redirect('login_home')
     else:
-        return render(request, 'login_home.html')
+        return render(request, 'dashboard/login_home.html')
 
 @login_required
 def logout_user(request):

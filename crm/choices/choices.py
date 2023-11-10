@@ -8,14 +8,6 @@ SALUTATION_CHOICES = [
     ('MRS', 'Mrs')
 ]
 
-# TITLE = [
-#     ('CEO', 'CEO'),
-#     ('SALES REPRESENTATIVE', 'Sales Representative'),
-#     ('STUDENT', 'Student'),
-# ]
-
-
-
 LEGAL_NATURE_CHOICES = [
     ('PRIVATE', 'Private'),
     ('PUBLIC', 'Public'),
@@ -46,6 +38,16 @@ LAST_CONTACTED_VIA_CHOICES = [
     ('PHONE_CALL', 'Phone Call'),
     ('IN_PERSON', 'In Person')
 ]
+
+PIPELINE_CHOICES = [
+    ('STANDARD', 'Standard'),
+]
+
+# TITLE = [
+#     ('CEO', 'CEO'),
+#     ('SALES REPRESENTATIVE', 'Sales Representative'),
+#     ('STUDENT', 'Student'),
+# ]
 
 # CURRENCY_CHOICES = [
 #     ('USD', 'USD'),

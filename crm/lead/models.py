@@ -6,7 +6,6 @@ from choices.choices import *
 from option.models import Title, Currency, ProductCategory, Provider, Country
 from userprofile.models import CustomUser
 
-
 def get_sentinel_user():
     user, created = CustomUser.objects.get_or_create(username="deleted")
     if created:
@@ -40,12 +39,12 @@ class Lead(models.Model):
     company = models.CharField(
         max_length=100, unique=False, blank=True)
     legal_nature = models.CharField(
-        max_length=10, choices=LEGAL_NATURE_CHOICES, default='Private')
+        max_length=10, choices=LEGAL_NATURE_CHOICES, default='PRIVATE')
     website = models.URLField(blank=True)
     lead_source = models.CharField(
-        max_length=100, choices=LEAD_SOURCE_CHOICES, blank=True)
+        max_length=100, choices=LEAD_SOURCE_CHOICES, default='WEBSITE')
     lead_status = models.CharField(
-        max_length=100, choices=LEAD_STATUS_CHOICES, default='New')
+        max_length=100, choices=LEAD_STATUS_CHOICES, default='NEW')
     last_contacted_on = models.DateField(blank=True, null=True)
     last_contacted_via = models.CharField(
         max_length=20, choices=LAST_CONTACTED_VIA_CHOICES, blank=True)
@@ -66,7 +65,7 @@ class Lead(models.Model):
         Provider, on_delete=models.CASCADE, blank=True, null=True)
     description = models.TextField(blank=False)
     assigned_to = models.ForeignKey(
-        settings.AUTH_USER_MODEL, related_name='assigned_leads', on_delete=models.SET(get_sentinel_user), blank=False)
+        settings.AUTH_USER_MODEL, related_name='assigned_leads', on_delete=models.SET(get_sentinel_user))
     created_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name='created_leads', on_delete=models.SET(get_sentinel_user))
     created_time = models.DateTimeField(auto_now_add=True)
@@ -75,7 +74,8 @@ class Lead(models.Model):
         settings.AUTH_USER_MODEL, related_name='last_modified_leads', on_delete=models.SET(get_sentinel_user))
     is_closed = models.BooleanField(default=False)
     erased = models.BooleanField(default=False)
-    pipeline = models.CharField(max_length=100, default='Standard')
+    pipeline = models.CharField(
+        max_length=100, choices=PIPELINE_CHOICES, default='STANDARD')
 
     def save(self, *args, **kwargs):
         # Verifica si no existe created_by y si no hay una instancia previa en la base de datos
