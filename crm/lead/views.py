@@ -86,72 +86,88 @@ def create_lead_registered(request):
     ).exclude(username='deleted')
 
     if request.method == 'POST':
-        if form.is_valid():
-            new_lead = form.save(commit=False)
-            new_lead.created_by = request.user
-            new_lead.last_modified_by = request.user
-            new_lead.save()
-            messages.success(request, "Lead was created")
-            return redirect('leads')
+        email = request.POST.get('primary_email')
+        if Lead.objects.filter(primary_email=email).exists():
+            messages.error(request, "This email already exists.")
         else:
-            messages.error(
-                request, "Invalid form data. Please check the entries and try again.")
-    
+            if form.is_valid():
+                form.cleaned_data['created_by'] = request.user
+                form.cleaned_data['last_modified_by'] = request.user
+                Lead.objects.create(**form.cleaned_data)
+                messages.success(request, "Lead was created")
+                return redirect('leads')
+            else:
+                messages.error(
+                    request, "Invalid form data. Please check the entries and try again.")    
     context = {
         'form' : form
     }
     return render(request, 'leads/lead_create_authenticated.html', context)
     
-    
+   
 '''
-El argumento commit=False en form.save(commit=False) en Django te permite crear una instancia del modelo sin guardarla inmediatamente en la base de datos. Esto es útil cuando necesitas realizar alguna manipulación adicional en la instancia antes de guardarla definitivamente.
-Cuando utilizas commit=False, se crea una instancia del modelo, pero no se realiza la operación de guardar en la base de datos. Esto te da la oportunidad de realizar cambios adicionales en la instancia antes de guardarla. Luego, puedes llamar a save() en la instancia manualmente para persistirla en la base de datos.
-En el caso de tu vista add_lead, esto se utiliza para asignar valores a los campos created_by y last_modified_by antes de guardar el objeto en la base de datos.
-
+hemos utilizado form.cleaned_data para obtener un diccionario con los datos limpios y validados del formulario. Luego, hemos pasado ese diccionario directamente a create() utilizando el operador ** para desempaquetar los valores del diccionario como argumentos de la función create(). Esto nos permite crear el objeto Lead con todos los campos del formulario sin necesidad de agregarlos uno por uno.
 '''
 
 def create_lead_anonymous(request):
     form = AddLeadFormForAnonymous(request.POST)
-    form.fields['country'].queryset = Country.objects.filter(is_selected=True)  # Aplicar el filtro en el formulario
+    form.fields['country'].queryset = Country.objects.filter(
+        is_selected=True)  # Aplicar el filtro en el formulario
     form.fields['assigned_to'].queryset = CustomUser.objects.filter(
         Q(is_staff=True, is_superuser=True) |
         Q(is_staff=True, is_superuser=False) |
         Q(is_staff=False, is_superuser=True)
     ).exclude(username='deleted')
     if request.method == 'POST':
-        if form.is_valid():
-            new_lead = form.save(commit=False)
-            if not request.user.is_authenticated:
-                default_create_user_instance = DefaultCreatedBy.objects.first()
-                default_assigned_to_user_instance = DefaultAssignedTo.objects.first()
-                if default_create_user_instance:
-                    new_lead.created_by = default_create_user_instance.user
-                    new_lead.last_modified_by = default_create_user_instance.user
-                else:
-                    first_custom_user = CustomUser.objects.first()
-                    new_lead.created_by = first_custom_user
-                    new_lead.last_modified_by = first_custom_user
-
-                if default_assigned_to_user_instance:
-                    new_lead.assigned_to = default_assigned_to_user_instance.user
-                else:
-                    first_custom_user = CustomUser.objects.first()
-                    new_lead.assigned_to = first_custom_user
-            else:
-                new_lead.created_by = request.user
-                new_lead.last_modified_by = request.user
-                new_lead.assigned_to = DefaultAssignedTo.objects.first().user
-            new_lead.save()
-            messages.success(request, "Lead was created")
-            return redirect('leads')
+        email = request.POST.get('primary_email')
+        if Lead.objects.filter(primary_email=email).exists():
+            messages.error(request, "This email already exists.")
         else:
-            messages.error(
-                request, "Invalid form data. Please check the entries and try again.")
+            if form.is_valid():
+                print('estoy dentro')
+                email = form.cleaned_data['primary_email']
+                print(email)
+                try:
+                    Lead.objects.get(primary_email=email)
+                    print(Lead.objecs.get(primary_email=email))
+                    messages.error(request, "This email already exists.")
+                except Lead.DoesNotExist:
+                    if not request.user.is_authenticated:
+                        if DefaultCreatedBy.objects.first():
+                            form.cleaned_data['created_by'] = DefaultCreatedBy.objects.first(
+                            ).user
+                            form.cleaned_data['last_modified_by'] = DefaultCreatedBy.objects.first(
+                            ).user
+                        else:
+                            form.cleaned_data['created_by'] = CustomUser.objects.first(
+                            ).user
+                            form.cleaned_data['last_modified_by'] = CustomUser.objects.first(
+                            ).user
+
+                        if DefaultAssignedTo.objects.first():
+                            form.cleaned_data['assigned_to'] = DefaultAssignedTo.objects.first(
+                            ).user
+                        else:
+                            form.cleaned_data['assigned_to'] = CustomUser.objects.first(
+                            ).user
+
+                Lead.objects.create(**form.cleaned_data)
+                messages.success(request, "Lead was created")
+                return redirect('leads')
+            else:
+                messages.error(
+                    request, "Invalid form data. Please check the entries and try again.")
     context = {
         'form': form
     }
     return render(request, 'leads/lead_create_anonymous.html', context)
 
+
+''' 
+/************
+LEAD DETAIL
+/************
+'''
 
 @login_required
 def leads_detail(request, pk):
