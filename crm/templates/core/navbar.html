@@ -8,24 +8,26 @@
             <a class="navbar-brand" href="#">Blasting Experts</a>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 {% if request.user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'dashboard_home' %}">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'leads' %}">Leads</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'lead_add' %}">Add Lead</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                </li>
-                {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login_home' %}">Log in</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'dashboard_home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'leads:leads' %}">Leads</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'leads:lead_create' %}">Add Lead</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'leads:lead_create_be' %}">Add Lead</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login_home' %}">Log in</a>
+                    </li>
                 {% endif %}
-
             </ul>
             <form class="d-flex" role="search">
                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

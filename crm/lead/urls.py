@@ -1,11 +1,14 @@
 from django.urls import path
 
-from . import views
+from lead import views
+
+app_name = 'leads'
 
 urlpatterns = [
-    path('leads/', views.homeLead, name='leads'),
-    path('leads_list/', views.LeadListView.as_view(), name='leads_list'),
-    path('lead_add/', views.create_lead_registered, name='lead_add'),
-    path('lead_add_be/', views.create_lead_anonymous, name='lead_add_be'),
-    path('lead_detail/<int:pk>/', views.leads_detail, name = 'lead_detail'),
+    path('list', views.homeLead, name='leads'),
+    path('leads_json/', views.LeadListView.as_view(), name='leads_json'),
+    path('create/', views.create_lead_registered, name='lead_create'),
+    path('create_be/', views.create_lead_anonymous, name='lead_create_be'),
+    path('<int:pk>/', views.leads_detail, name = 'lead_detail'),
+    path('<int:pk>/update/', views.leads_update, name = 'lead_update'),
 ]

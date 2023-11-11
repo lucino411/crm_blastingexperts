@@ -83,7 +83,7 @@ const initDataTable = async () => {
 
 const listLeads = async () => {
     try {
-        const response = await fetch(`${BASE_URL}/leads_list`);
+        const response = await fetch(`${BASE_URL}/leads/leads_json`);
         const data = await response.json();
         let content = ``;
 
@@ -98,7 +98,7 @@ const listLeads = async () => {
             content += `
         <tr>
             <td>${index + 1}</td>
-            <td><a href="/lead_detail/${leadData.id}/">${leadData.first_name}</a></td>
+            <td><a href="/leads/${leadData.id}/">${leadData.first_name}</a></td>
             <td>${leadData.last_name}</td>
             <td>${leadData.primary_email}</td>
             <td>${leadData.country}</td>

@@ -1,3 +1,4 @@
+from .models import Lead
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from django.http import HttpResponse
@@ -31,32 +32,28 @@ def homeLead(request):
     context['titulo'] = 'Gestion de Leads'
     return render(request, 'leads/leads_list.html', context)
 
-# @login_required
+
+# Query de Leads de la base de datos enviada a JS como JSON para las Datatables JS
 class LeadListView(ListView):
     model = Lead
 
-    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
-        context = super().get_context_data(**kwargs)
+    def get(self, request, *args, **kwargs):
         leads = self.get_queryset()
         leads_data = list(leads.values('id', 'first_name', 'last_name', 'primary_email',
-                          'country', 'created_time', 'modified_time', 'assigned_to_id', 'created_by_id'))
+                                       'country', 'created_time', 'modified_time', 'assigned_to_id', 'created_by_id'))
         country_names = {
-            country.id: country.name for country in Country.objects.all()}
+            country.id: country.name for country in Country.objects.all()
+        }
         user_names = {
-            user.id: f"{user.first_name} {user.last_name}" for user in CustomUser.objects.all()}
+            user.id: f"{user.first_name} {user.last_name}" for user in CustomUser.objects.all()
+        }
 
         for lead in leads_data:
             lead['country'] = country_names.get(lead['country'])
             lead['assigned_to'] = user_names.get(lead['assigned_to_id'])
             lead['created_by'] = user_names.get(lead['created_by_id'])
 
-        context['leads'] = leads_data
-        return context
-
-    def render_to_response(self, context, **response_kwargs):
-        leads = context['leads']
-        return JsonResponse({'leads': leads}, safe=False)
-
+        return JsonResponse({'leads': leads_data})
 
 '''
 En Python, super() se utiliza para acceder y llamar a métodos definidos en la clase base. En el contexto de la clase LeadListView que estás creando, super().get_context_data(**kwargs) se refiere al método get_context_data de la clase base, en este caso, la clase ListView de Django. Estás llamando al método get_context_data de la clase base y pasándole cualquier argumento que se haya proporcionado a tu clase LeadListView.
@@ -95,7 +92,7 @@ def create_lead_registered(request):
                 form.cleaned_data['last_modified_by'] = request.user
                 Lead.objects.create(**form.cleaned_data)
                 messages.success(request, "Lead was created")
-                return redirect('leads')
+                return redirect('leads:leads')
             else:
                 messages.error(
                     request, "Invalid form data. Please check the entries and try again.")    
@@ -124,12 +121,9 @@ def create_lead_anonymous(request):
             messages.error(request, "This email already exists.")
         else:
             if form.is_valid():
-                print('estoy dentro')
                 email = form.cleaned_data['primary_email']
-                print(email)
                 try:
                     Lead.objects.get(primary_email=email)
-                    print(Lead.objecs.get(primary_email=email))
                     messages.error(request, "This email already exists.")
                 except Lead.DoesNotExist:
                     if not request.user.is_authenticated:
@@ -153,7 +147,7 @@ def create_lead_anonymous(request):
 
                 Lead.objects.create(**form.cleaned_data)
                 messages.success(request, "Lead was created")
-                return redirect('leads')
+                return redirect('leads:leads')
             else:
                 messages.error(
                     request, "Invalid form data. Please check the entries and try again.")
@@ -172,11 +166,31 @@ LEAD DETAIL
 @login_required
 def leads_detail(request, pk):
     lead = get_object_or_404(Lead, pk=pk)
-    # lead = get_object_or_404(Lead, created_by=request.user, pk=pk) # de esta forma solo el usuario que creo el lead puede modificarla
-    # lead = Lead.objects.get(pk=pk)
-
-    lead = Lead.objects.get(id=pk)  # Obtener el lead de la base de datos
-    # form = AddLeadFormForUnregistered(instance=lead)  # Pasar los datos del lead al formulario
-    # context = {'form': form}
     context = {'lead': lead}
     return render(request, 'leads/lead_detail.html', context)
+
+
+''' 
+/************
+LEAD UPDATE
+/************
+'''
+
+@login_required
+def leads_update(request, pk):
+    lead = get_object_or_404(Lead, pk=pk)
+    if request.method == 'POST':
+        form = AddLeadFormForAnonymous(request.POST, instance=lead)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Lead was updated")
+            return redirect('leads:leads')
+        else:
+            messages.error(request, "Invalid form data. Please check the entries and try again.")            
+    else:
+        form = AddLeadFormForAnonymous(instance=lead)
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'leads/leads_update.html', context)
