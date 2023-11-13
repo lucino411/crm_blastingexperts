@@ -9,7 +9,14 @@ class AddLeadFormForRegistered(forms.ModelForm):
     salutation = forms.ChoiceField(choices=SALUTATION_CHOICES, widget=forms.Select(attrs={'class': 'form-select'}))
     first_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}))
     last_name = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}))
-    primary_email = forms.EmailField(label="", widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}))
+    primary_email = forms.EmailField(label="", widget=forms.EmailInput(attrs={'id': "addLeadUnregisterEmail", 'class': 'form-control', 'placeholder': 'Email'}), error_messages={
+        'unique': 'Este email ya está en uso. Por favor, proporciona un email diferente.',
+        'invalid': 'Por favor, introduce un email válido.',
+    })
+    primary_email = forms.EmailField(label="", widget=forms.EmailInput(attrs={'class': 'form-control', 'id': "addLeadUnregisterEmail"}), required=True, error_messages={
+        'unique': 'Este email ya está en uso. Por favor, proporciona un email diferente.',
+        'invalid': 'Por favor, introduce un email válido.',
+    })
     phone = forms.CharField(label="", max_length=20, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone'}))
     company = forms.CharField(label="", max_length=100, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Company'}))
     title = forms.ModelChoiceField(queryset=Title.objects.all(), widget=forms.Select(attrs={'class': 'form-select'}))

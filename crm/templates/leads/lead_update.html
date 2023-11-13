@@ -30,7 +30,7 @@
             <label for="addLeadUnregisterEmail" class="form-label">Email</label>
             {{ form.primary_email }}
             {% if form.errors.primary_email %}
-            <div id="email-error" class="text-danger">{{ form.errors.primary_email }}</div>
+                <div id="email-error" class="text-danger">{{ form.errors.primary_email }}</div>
             {% endif %}
         </div>
         <div class="col-md-4">
@@ -148,17 +148,4 @@
 {% endblock %}
 
 
-
-
-
-    {% block scripts %}
-        <script>
-            const emailInput = document.getElementById('addLeadUnregisterEmail');
-            const emailError = document.getElementById('email-error');
-
-            emailInput.addEventListener('input', function () {
-                emailError.style.display = 'none';
-            });
-        </script>
-
-    {% endblock %}
+{% include 'script_validate_form.html' %}

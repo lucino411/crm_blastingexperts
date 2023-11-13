@@ -26,6 +26,9 @@
         <div class="col-md-8">
             <label for="addLeadRegisterEmail" class="form-label">Email</label>
             {{ form.primary_email }}
+            {% if form.errors.primary_email %}
+                <div id="email-error" class="text-danger">{{ form.errors.primary_email }}</div>
+            {% endif %}
         </div>
         <div class="col-md-4">
             <label for="addLeadRegisterPhone" class="form-label">Telefono</label>
@@ -144,3 +147,4 @@
 
 {% endblock %}
 
+{% include 'script_validate_form.html' %}

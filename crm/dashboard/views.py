@@ -36,6 +36,5 @@ def logout_user(request):
     return redirect('login_home')
 
 
-def page_not_found404(request, exception):
-    
-    return render(request, '404.html')
+def page_not_found404(request, exception):    
+    return render(request, 'dashboard/404.html')

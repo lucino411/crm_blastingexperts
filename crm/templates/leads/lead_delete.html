@@ -1,0 +1,169 @@
+{% extends "core/base.html" %}
+
+{% block title %}Leads{% endblock %}
+
+{% block content %}
+
+<h1 class="text-xl">Delete Lead</h1>
+
+<h2 class="text-xl">Lead {{ lead.salutation }} {{ lead.first_name }} {{ lead.last_name }}</h2>
+
+
+<h2>Are you sure?</h2>
+
+
+
+
+<form action="." method="post" class="">
+    {% csrf_token %}
+    <div class="row mb-3 d-none">
+        <div class="col-md-2">
+            <label for="addLeadUnregisterSalutation" class="form-label">&nbsp;</label>
+            {{ form.salutation }}
+        </div>
+        <div class="col-md-5">
+            <label for="addLeadUnregisterFirstName" class="form-label">Nombre</label>
+            {{ form.first_name }}
+        </div>
+        <div class="col-md-5">
+            <label for="addLeadUnregisterLastName" class="form-label">Apellido</label>
+            {{ form.last_name }}
+        </div>
+    </div>
+    <div class="row mb-3 d-none">
+        <div class="col-md-8">
+            <label for="addLeadUnregisterEmail" class="form-label">Email</label>
+            {{ form.primary_email }}
+            {% if form.errors.primary_email %}
+            <div id="email-error" class="text-danger">{{ form.errors.primary_email }}</div>
+            {% endif %}
+        </div>
+        <div class="col-md-4">
+            <label for="addLeadUnregisterPhone" class="form-label">Telefono</label>
+            {{ form.phone }}
+        </div>
+    </div>
+    <div class="row mb-3 d-none">
+        <div class="col-md-8">
+            <label for="addLeadUnregisterCompany" class="form-labe">Empresa</label>
+            {{ form.company }}
+        </div>
+        <div class="col-md-2">
+            <label for="addLeadUnregisterLegaNature" class="form-label">&nbsp;</label>
+            {{ form.legal_nature }}
+        </div>
+        <div class="col-md-2">
+            <label for="addLeadUnregisterTitle" class="form-label">Cargo</label>
+            {{ form.title }}
+        </div>
+    </div>
+    <div class="row mb-3 d-none">
+        <div class="col-md-8">
+            <label for="addLeadUnregisterWebsite" class="form-label">Empresa Website</label>
+            {{ form.website }}
+        </div>
+    </div>
+    <div class="row mb-3 d-none">
+        <div class="col-md-4">
+            <label for="addLeadUnregisterLeadSource" class="form-label">Lead Source</label>
+            {{ form.lead_source }}
+        </div>
+    </div>
+    <div class="row mb-3 d-none">
+        <div class="col-md-5">
+            <label for="addLeadUnregisterLastContactedOn" class="form-label">Ultimo contacto</label>
+            {{ form.last_contacted_on }}
+        </div>
+        <div class="col-md-3">
+            <label for="addLeadUnregisterLastContactedVia" class="form-label">Ultimo contacto via</label>
+            {{ form.last_contacted_via }}
+        </div>
+    </div>
+    <div class="row mb-3 d-none">
+        <div class="col-md-2">
+            <label for="addLeadUnregisterCurrency" class="form-label">Moneda</label>
+            {{ form.currency }}
+        </div>
+        <div class="col-md-3">
+            <label for="addLeadUnregisterRecordConversionRate" class="form-label">Moneda Rate</label>
+            {{ form.record_conversion_rate }}
+        </div>
+        <div class="col-md-3">
+            <label for="" class="form-label">&nbsp;</label>
+            {{ form.record_conversion_rate }}
+        </div>
+    </div>
+    <div class="row mb-3 d-none">
+        <div class="col-md-4">
+            <label for="addLeadUnregisterCountry" class="form-label">Country</label>
+            {{ form.country }}
+        </div>
+        <div class="col-md-4">
+            <label for="addLeadUnregisterCity" class="form-label">City</label>
+            {{ form.city }}
+        </div>
+        <div class="col-md-4">
+            <label for="addLeadUnregisterState" class="form-label">State</label>
+            {{ form.state }}
+        </div>
+    </div>
+    <div class="row mb-3 d-none">
+        <div class="col-md-8">
+            <label for="addLeadUnregisterAddress" class="form-label">Address</label>
+            {{ form.address }}
+        </div>
+        <div class="col-md-2">
+            <label for="addLeadUnregisterZipCode" class="form-label">Zip Code</label>
+            {{ form.zip_code }}
+        </div>
+        <div class="col-md-2">
+            <label for="addLeadUnregisterPostalCode" class="form-label">Postal Code</label>
+            {{ form.postal_code }}
+        </div>
+    </div>
+
+    <div class="row mb-3 d-none">
+        <div class="col-md-8">
+            <label for="addLeadUnregisterWebsite" class="form-label">URL Producto</label>
+            {{ form.product_website }}
+        </div>
+        <div class="col-md-4">
+            <label for="addLeadUnregisterProvider" class="form-label">Proveedor</label>
+            {{ form.provider }}
+        </div>
+    </div>
+
+    <div class="row mb-3 d-none">
+        <div class="col-md-12">
+            <label for="addLeadUnregisterDescription" class="form-label">Descripcion</label>
+            {{ form.description }}
+        </div>
+    </div>
+    <div class="row mb-3 d-none">
+        <div class="col-md-5">
+            <label for="addLeadUnregisterAssignedTo" class="form-label">Assigned to</label>
+            {{ form.assigned_to }}
+        </div>
+    </div>
+
+    <br>
+    <button type="submit" class="btn btn-danger">Delete</button>
+</form>
+
+{% endblock %}
+
+
+
+
+
+{% block scripts %}
+<script>
+    const emailInput = document.getElementById('addLeadUnregisterEmail');
+    const emailError = document.getElementById('email-error');
+
+    emailInput.addEventListener('input', function () {
+        emailError.style.display = 'none';
+    });
+</script>
+
+{% endblock %}

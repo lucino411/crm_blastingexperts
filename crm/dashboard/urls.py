@@ -1,6 +1,8 @@
 from django.contrib.auth import views as auth_views
 from django.urls import path
 from django.conf.urls import handler404
+from dashboard.views import page_not_found404
+
 
 
 from dashboard import views

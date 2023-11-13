@@ -107,8 +107,8 @@ const listLeads = async () => {
             <td>${leadData.assigned_to}</td>
             <td>${leadData.created_by}</td>
             <td>
-                <button class='btn btn-sm btn-primary'><i class='fa-solid fa-pencil'></i></button>
-                <button class='btn btn-sm btn-danger'><i class='fa-solid fa-trash-can'></i></button>
+                <a href="/leads/${leadData.id}/update/" class="btn btn-sm btn-secondary"><i class='fa-solid fa-pencil'></i></a>
+                <a href="/leads/${leadData.id}/delete/" class="btn btn-sm btn-danger"><i class='fa-solid fa-trash-can'></i></i></a>
             </td>        
         </tr>
         `;
