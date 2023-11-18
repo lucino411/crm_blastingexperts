@@ -8,29 +8,16 @@ from django.http import JsonResponse
 from django.shortcuts import reverse, render, redirect
 from django.db.models import Q
 
-
-
-
 from .models import Lead, Country
 from userprofile.models import CustomUser
 from .forms import AddLeadFormForRegistered, AddLeadFormForAnonymous
 from lead.models import DefaultCreatedBy, DefaultAssignedTo
 
-
-
-
-
-# @login_required
-# def homeLead(request):
-#     context = {}
-#     context['titulo'] = 'Gestion de Leads'
-#     return render(request, 'leads/leads_list.html', context)
 ''' 
 /************
 LIST LEADS
 /************
 '''
-
 class HomeLeadView(LoginRequiredMixin, TemplateView):
     template_name = 'leads/leads_list.html'
 
@@ -39,7 +26,6 @@ class HomeLeadView(LoginRequiredMixin, TemplateView):
         context['titulo'] = 'Gestion de Leads'
         return context
     
-
 # Query de Leads de la base de datos enviada a JS como JSON para las Datatables JS
 class LeadListView(ListView):
     model = Lead
@@ -67,11 +53,9 @@ class LeadListView(ListView):
 LEAD DETAIL
 /************
 '''
-
 class LeadDetailView(LoginRequiredMixin, DetailView):
     template_name = 'leads/lead_detail.html'
     queryset = Lead.objects.all()
-
 
 ''' 
 /************
@@ -86,7 +70,6 @@ class LeadUpdateView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse("leads:leads_list")
 
-
 ''' 
 /************
 LEAD DELETE
@@ -98,7 +81,6 @@ class LeadDeleteView(LoginRequiredMixin, DeleteView):
 
     def get_success_url(self):
         return reverse('leads:leads_list')
-
 
 ''' 
 /************

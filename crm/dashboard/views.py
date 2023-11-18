@@ -5,11 +5,9 @@ from django.contrib import messages
 # from .models import Lead
 
 
-
 @login_required
 def dashboard(request):
     return render(request, 'dashboard/dashboard_home.html')
-
 
 def login_user(request):
     # Check to see if logging in
