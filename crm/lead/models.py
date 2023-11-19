@@ -31,8 +31,7 @@ class Lead(models.Model):
         max_length=5, choices=SALUTATION_CHOICES, blank=True)
     first_name = models.CharField(max_length=100, blank=False)
     last_name = models.CharField(max_length=100, blank=False)
-    primary_email = models.EmailField(unique=True, blank=False, help_text="Please use the following format: <em>YYYY-MM-DD</em>."
-                                      )
+    primary_email = models.EmailField(unique=True, blank=False, help_text="Please use the following format: <em>YYYY-MM-DD</em>."                                      )
     phone = models.CharField(max_length=20, blank=True)
     title = models.ForeignKey(
         Title, on_delete=models.CASCADE, null=True, blank=True)

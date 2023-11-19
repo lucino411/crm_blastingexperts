@@ -1,0 +1,28 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Leads{% endblock %}
+
+{% block styles %}
+<!-- Datatables -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+    <div class="py-5 border-t border-gray-200">
+        <h1 class="text-4xl text-gray-800">Are you sure you want to delete {{ object.name }}?</h1>
+    </div>
+    <form method="post" class="mt-5">
+        {% csrf_token %}
+        {{ form }}
+        <button type='submit' class="btn btn-danger">
+            Submit
+        </button>
+          
+        </div>
+    </div>
+</div>
+{% endblock %}

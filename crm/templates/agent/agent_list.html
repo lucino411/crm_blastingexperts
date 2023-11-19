@@ -1,0 +1,33 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Leads{% endblock %}
+
+{% block styles %}
+<!-- Datatables -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <!-- organization/organisator_list.html -->
+            <h2>Agents</h2>
+            <ul>
+{% for agent in agents %}
+<li>
+    {{ agent.user.first_name }} {{ agent.user.last_name }} - {{ agent.user.email }} - {{ agent.user.phone }}
+    <ul>
+        {% for organization in agent.organizations.all %}
+        <li>{{ organization.name }}</li>
+        {% endfor %}
+    </ul>
+</li>
+{% endfor %}
+
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
