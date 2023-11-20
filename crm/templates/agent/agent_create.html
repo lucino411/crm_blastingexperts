@@ -1,0 +1,38 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Leads{% endblock %}
+
+{% block styles %}
+<!-- Datatables -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <h1 class="text-4xl text-gray-800">Create a new agent</h1>
+        <form method="post">
+            {% csrf_token %}
+        
+            <label for="agent_id">Seleccionar agente:</label>
+            <select name="agent_id" id="agent_id">
+                {% for agent in available_agents %}
+                <option value="{{ agent.id }}">{{ agent.username }}</option>
+                {% endfor %}
+            </select>
+        
+            <label for="organization_id">Seleccionar organización:</label>
+            <select name="organization_id" id="organization_id">
+                {% for organization in user_organizations %}
+                <option value="{{ organization.id }}">{{ organization.name }}</option>
+                {% endfor %}
+            </select>
+        
+            <button type="submit">Crear Agente</button>
+        </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -21,8 +21,10 @@
                     {{ organization.name }} - {{ organization.email }}</a> - {{ organization.created_by.first_name }} {{ organization.created_by.last_name }}</li>
                 {% endfor %}
             </ul>
+            <a href="{% url 'organization:organization_create' %}" class="btn btn-primary mt-4">Organization Create</a>
+            <a href="{% url 'agent:agent_create' %}" class="btn btn-primary mt-4">Add Agent</a>
         </div>
-        <a href="{% url 'organization:organization_create' %}">Organization Create</a>
+
     </div>
 </div>
 {% endblock %}

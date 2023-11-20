@@ -13,20 +13,30 @@
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <!-- organization/organisator_list.html -->
-            <h2>Agents</h2>
-            <ul>
-{% for agent in agents %}
-<li>
-    {{ agent.user.first_name }} {{ agent.user.last_name }} - {{ agent.user.email }} - {{ agent.user.phone }}
+
+
+
+
+
+
+    <h1>Lista de Agentes</h1>
     <ul>
-        {% for organization in agent.organizations.all %}
+        {% for organization in organizations %}
         <li>{{ organization.name }}</li>
+        <ul>
+            {% for agent in organization.members.all %}
+            <li>{{ agent.username }}</li>
+            {% endfor %}
+        </ul>
         {% endfor %}
     </ul>
-</li>
-{% endfor %}
 
-            </ul>
+
+
+
+
+
+
         </div>
     </div>
 </div>

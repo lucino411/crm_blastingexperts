@@ -1,7 +1,6 @@
 from django.views.generic import ListView, UpdateView, DetailView, CreateView, DeleteView
 from django.shortcuts import reverse
-from .mixins import OrganisorAndLoginRequiredMixin
-from userprofile.models import CustomUser
+from option.mixins import OrganisorAndLoginRequiredMixin
 from .models import Organization
 from .forms import OrganizationCreateModelForm
 
@@ -19,11 +18,18 @@ class OrganizationListView(OrganisorAndLoginRequiredMixin, ListView):
         context['is_organizator'] = self.request.user.is_organizator
         return context
     
+
 class OrganizationDetailView(OrganisorAndLoginRequiredMixin, DetailView):
     model = Organization
     template_name = 'organization/organization_detail.html'
-    context_object_name = 'organization'   
-    
+    context_object_name = 'organization'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['organizer'] = self.object.created_by
+        context['agents'] = self.object.members.filter(is_agent=True)
+        return context
+   
 class OrganizationCreateView(OrganisorAndLoginRequiredMixin, CreateView):
     template_name = 'organization/organization_create.html'
     form_class = OrganizationCreateModelForm
@@ -38,7 +44,6 @@ class OrganizationCreateView(OrganisorAndLoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('organization:organization_list')
     
-
 class OrganizationUpdateView(OrganisorAndLoginRequiredMixin, UpdateView):
     model = Organization
     template_name = 'organization/organization_update.html'

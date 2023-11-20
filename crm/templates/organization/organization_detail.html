@@ -12,14 +12,31 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
-
             <!-- organization/organisator_list.html -->
-            <h2>Organization Detail</h2>
-    <li>{{ organization.name }} - {{ organization.email }} - {{ organization.created_by.first_name }} {{
-        organization.created_by.last_name }}</li>
+     
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mt-5">
 
-        <a href="{% url 'organization:organization_update' organization.pk %}" class="btn btn-success mt-4">Update</a>
-        <a href="{% url 'organization:organization_delete' organization.pk %}" class="btn btn-danger mt-4">Delete</a>
+    <h1>{{ organization.name }} Detail</h1>
+
+    <li>Email: {{ organization.email }}</li>
+    <li>
+        Organizer: {{ organizer.username }} - {{ organization.created_by.first_name }} {{ organization.created_by.last_name }}
+    </li>
+    <a href="{% url 'organization:organization_update' organization.pk %}" class="btn btn-success mt-4">Update</a>
+    <a href="{% url 'organization:organization_delete' organization.pk %}" class="btn btn-danger mt-4">Delete</a>
+    <br><br><br>
+    <h2>Agents:</h2>
+    <ul>
+        {% for agent in agents %}
+        <li>{{ agent.username }}</li>
+        {% endfor %}
+    </ul>
+
+
+
+
+
         </div>
     </div>
 </div>
