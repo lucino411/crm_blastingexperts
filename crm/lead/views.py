@@ -5,11 +5,12 @@ from django.views.generic.edit import FormView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 from django.http import JsonResponse
-from django.shortcuts import reverse, render, redirect
+from django.shortcuts import reverse, render, redirect, get_object_or_404
 from django.db.models import Q
 
 from .models import Lead, Country
 from userprofile.models import CustomUser
+from organization.models import Organization
 from .forms import AddLeadFormForRegistered, AddLeadFormForAnonymous
 from lead.models import DefaultCreatedBy, DefaultAssignedTo
 
@@ -113,7 +114,16 @@ class LeadCreateRegisteredView(UserPassesTestMixin, LoginRequiredMixin, FormView
         else:
             form.instance.created_by = self.request.user
             form.instance.last_modified_by = self.request.user
+
+            # Obtener la organización del agente que está creando el lead
+            user_organization = Organization.objects.filter(members=self.request.user).first()
+
+            # Asignar la organización al lead
+            form.instance.organization = user_organization
+            print(user_organization)
+
             form.save()
+            
             messages.success(self.request, "Lead was created")
             return redirect('leads:leads_list')
 

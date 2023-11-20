@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _  # ayuda en traducciones
 
 from choices.choices import *
 from option.models import Title, Currency, ProductCategory, Provider, Country
+from organization.models import Organization
 from userprofile.models import CustomUser
 
 def get_sentinel_user():
@@ -71,6 +72,8 @@ class Lead(models.Model):
     modified_time = models.DateTimeField(auto_now=True)
     last_modified_by = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name='last_modified_leads', on_delete=models.SET(get_sentinel_user))
+    organization = models.ForeignKey(
+        Organization, related_name='leads', on_delete=models.SET_NULL, null=True, blank=True)
     is_closed = models.BooleanField(default=False)
     erased = models.BooleanField(default=False)
     pipeline = models.CharField(
