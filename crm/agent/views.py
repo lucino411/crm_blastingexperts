@@ -1,14 +1,8 @@
-from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
-from django.views import View
+from django.shortcuts import render, get_object_or_404, HttpResponseRedirect, reverse
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.views.generic import ListView
+from django.views import View
 
-from django.views.generic.edit import FormView
-from django.shortcuts import reverse, render, get_object_or_404
-
-from .models import Agent
-from .forms import AgentModelForm, AddAgentForm
 from organization.models import Organization
 from option.mixins import OrganisorAndLoginRequiredMixin
 from userprofile.models import CustomUser
@@ -34,24 +28,12 @@ class AgentListView(ListView):
         context['agents'] = agents
         return context
 
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     # Agregar las organizaciones a las que pertenecen los agentes al contexto
-    #     context['agents'] = Agent.objects.filter(organizations__in=context['organizaciones'])
-    #     print(context['agents'])
-    #     return context
-
-
 class AgentCreateView(OrganisorAndLoginRequiredMixin, View):
     template_name = 'agent/agent_create.html'
 
     def get(self, request):
         # Obtener todos los agentes disponibles que no están ya en una organización
         available_agents = CustomUser.objects.filter(is_agent=True)
-
-        print('availllllable')
-        print(available_agents)
 
         # Obtener todas las organizaciones creadas por el organizador
         user_organizations = Organization.objects.filter(
@@ -70,18 +52,24 @@ class AgentCreateView(OrganisorAndLoginRequiredMixin, View):
         organization_id = request.POST.get('organization_id')
 
         if agent_id and organization_id:
-            agent_user = get_object_or_404(CustomUser, id=agent_id, is_agent=True)
+            agent_user = get_object_or_404(
+                CustomUser, id=agent_id, is_agent=True)
             organization = get_object_or_404(
                 Organization, id=organization_id, created_by=request.user)
-            # Verificar si el agente ya pertenece a la organización
-            if not organization.members.filter(id=agent_user.id).exists():
+
+            # Verificar si el agente ya pertenece a la misma organización
+            if organization.members.filter(id=agent_user.id).exists():
+                messages.warning(
+                    request, f"El agente {agent_user.username} ya pertenece a la organización {organization.name}.")
+            # Verificar si el agente ya pertenece a otra organización
+            elif agent_user.organizations.exists():
+                messages.error(
+                    request, f"El agente {agent_user.username} ya pertenece a otra organización.")
+            else:
                 # Agregar el agente a la organización
                 organization.members.add(agent_user)
                 messages.success(
                     request, f"El agente {agent_user.username} se ha agregado a la organización {organization.name}.")
-            else:
-                messages.warning(
-                    request, f"El agente {agent_user.username} ya pertenece a la organización {organization.name}.")
         else:
             messages.error(
                 request, "Por favor, selecciona un agente y una organización.")

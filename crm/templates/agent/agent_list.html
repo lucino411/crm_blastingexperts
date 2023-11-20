@@ -14,11 +14,6 @@
         <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
             <!-- organization/organisator_list.html -->
 
-
-
-
-
-
     <h1>Lista de Agentes</h1>
     <ul>
         {% for organization in organizations %}
@@ -30,6 +25,8 @@
         </ul>
         {% endfor %}
     </ul>
+    <a href="{% url 'agent:agent_create' %}" class="btn btn-primary mt-4">Add Agent</a>
+
 
 
 
