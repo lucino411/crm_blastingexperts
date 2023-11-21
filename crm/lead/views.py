@@ -28,13 +28,47 @@ class HomeLeadView(LoginRequiredMixin, TemplateView):
         return context
     
 # Query de Leads de la base de datos enviada a JS como JSON para las Datatables JS
+# class LeadListView(ListView):
+#     model = Lead
+
+    # def get_queryset(self):
+        # Filtra los leads basados en el agente actualmente autenticado
+        # return Lead.objects.filter(assigned_to=self.request.user)
+
+    # def get(self, request, *args, **kwargs):
+    #     leads = self.get_queryset()
+    #     leads_data = list(leads.values('id', 'first_name', 'last_name', 'primary_email',
+    #                                    'country', 'created_time', 'modified_time', 'assigned_to_id', 'created_by_id'))
+    #     country_names = {
+    #         country.id: country.name for country in Country.objects.all()
+    #     }
+    #     user_names = {
+    #         user.id: f"{user.first_name} {user.last_name}" for user in CustomUser.objects.all()
+    #     }
+
+    #     for lead in leads_data:
+    #         lead['country'] = country_names.get(lead['country'])
+    #         lead['assigned_to'] = user_names.get(lead['assigned_to_id'])
+    #         lead['created_by'] = user_names.get(lead['created_by_id'])
+
+    #     return JsonResponse({'leads': leads_data})
+
+
 class LeadListView(ListView):
     model = Lead
 
+    def get_queryset(self):
+        # Obten la organización del agente actualmente autenticado
+        user_organization = Organization.objects.filter(members=self.request.user).first()
+
+        # Filtra los leads basados en la organización del agente
+        return Lead.objects.filter(organization=user_organization)
+
     def get(self, request, *args, **kwargs):
+        user_organization = Organization.objects.filter(members=self.request.user).first()
         leads = self.get_queryset()
         leads_data = list(leads.values('id', 'first_name', 'last_name', 'primary_email',
-                                       'country', 'created_time', 'modified_time', 'assigned_to_id', 'created_by_id'))
+                                       'country', 'created_time', 'modified_time', 'assigned_to_id', 'created_by_id', 'organization'))
         country_names = {
             country.id: country.name for country in Country.objects.all()
         }
@@ -46,8 +80,42 @@ class LeadListView(ListView):
             lead['country'] = country_names.get(lead['country'])
             lead['assigned_to'] = user_names.get(lead['assigned_to_id'])
             lead['created_by'] = user_names.get(lead['created_by_id'])
+            lead['organization'] = user_organization.name  # Agrega el nombre de la organización
+
 
         return JsonResponse({'leads': leads_data})
+    
+
+# class LeadListView(ListView):
+#     model = Lead
+
+    # def get_queryset(self):
+        # Obten la organización del agente actualmente autenticado
+
+        # Filtra los leads basados en la organización del agente
+        # return Lead.objects.filter(organization=user_organization)
+
+    # def get(self, request, *args, **kwargs):
+    #     # leads = self.get_queryset()
+    #     user_organization = Organization.objects.filter(members=self.request.user).first()
+    #     # leads = self.get_queryset().filter(organization=user_organization, assigned_to=self.request.user)
+    #     leads_data = list(leads.values('id', 'first_name', 'last_name', 'primary_email',
+    #                                    'country', 'created_time', 'modified_time', 'assigned_to_id', 'created_by_id'))
+    #     country_names = {
+    #         country.id: country.name for country in Country.objects.all()
+    #     }
+    #     user_names = {
+    #         user.id: f"{user.first_name} {user.last_name}" for user in CustomUser.objects.all()
+    #     }
+
+    #     for lead in leads_data:
+    #         lead['country'] = country_names.get(lead['country'])
+    #         lead['assigned_to'] = user_names.get(lead['assigned_to_id'])
+    #         lead['created_by'] = user_names.get(lead['created_by_id'])
+    #         lead['organization'] = user_organization.name  # Agrega el nombre de la organización
+
+
+    #     return JsonResponse({'leads': leads_data})
 
 ''' 
 /************
