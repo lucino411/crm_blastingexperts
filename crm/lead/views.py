@@ -98,12 +98,11 @@ class LeadCreateRegisteredView(UserPassesTestMixin, LoginRequiredMixin, FormView
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
         form.fields['country'].queryset = Country.objects.filter(
-            is_selected=True)
-        form.fields['assigned_to'].queryset = CustomUser.objects.filter(
-            Q(is_staff=True, is_superuser=True) |
-            Q(is_staff=True, is_superuser=False) |
-            Q(is_staff=False, is_superuser=True)
-        ).exclude(username='deleted')
+            is_selected=True)     
+        user_organization = Organization.objects.filter(members=self.request.user).first()
+
+        form.fields['assigned_to'].queryset = user_organization.members.filter(is_agent=True)     
+
         return form
 
     def form_valid(self, form):
@@ -120,7 +119,6 @@ class LeadCreateRegisteredView(UserPassesTestMixin, LoginRequiredMixin, FormView
 
             # Asignar la organización al lead
             form.instance.organization = user_organization
-            print(user_organization)
 
             form.save()
             
