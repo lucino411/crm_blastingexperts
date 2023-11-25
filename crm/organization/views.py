@@ -1,5 +1,5 @@
-from django.views.generic import ListView, UpdateView, DetailView, CreateView, DeleteView
 from django.shortcuts import reverse
+from django.views.generic import ListView, UpdateView, DetailView, CreateView, DeleteView
 from option.mixins import OrganisorAndLoginRequiredMixin
 from .models import Organization
 from .forms import OrganizationCreateModelForm

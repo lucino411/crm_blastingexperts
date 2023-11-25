@@ -1,0 +1,23 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<h2>Select Agents</h2>
+<form method="post" action="{% url 'leads:select_agent' %}">
+    {% csrf_token %}
+        <label for="created_by">Default Created By:</label>
+        <select name="created_by">
+            {% for agent in agents %}
+            <option value="{{ agent.id }}">{{ agent.get_full_name }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+    <label for="assigned_to">Default Assigned To:</label>
+    <select name="assigned_to">
+        {% for agent in agents %}
+            <option value="{{ agent.id }}">{{ agent.get_full_name }}</option>
+        {% endfor %}
+    </select>
+    <hr>
+    <input type="submit" value="Submit">
+</form>
+{% endblock %}

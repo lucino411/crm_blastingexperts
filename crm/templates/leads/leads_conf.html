@@ -1,0 +1,94 @@
+{% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Leads{% endblock %}
+
+
+
+{% block content %}
+
+<h1>Leads Configuration</h1>
+<div class="card mb-3" style="max-width: 540px;">
+    <div class="row g-0">
+      <div class="col-md-12">
+        <div class="card-body">
+          <h5 class="card-title">Leads Default Assigned To</h5>
+        <ul>
+{% if default_assigned_to %}
+                    <p>
+                        username: {{ default_assigned_to.user.username }}
+                    </p>
+                    <p>
+                        Nombres: {{default_assigned_to.user.first_name }} {{ default_assigned_to.user.last_name }}
+                    </p>
+                    <p>
+                        Email: {{ default_assigned_to.user.email }}
+                    </p>
+                    <p>
+                        Organization: {{ organization.name }}
+                    </p>
+{% else %}
+<li>No hay agente seleccionado como Default Assigned To</li>
+{% endif %}
+        </ul></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="card mb-3" style="max-width: 540px;">
+    <div class="row g-0">
+        <div class="col-md-12">
+            <div class="card-body">
+                <h5 class="card-title">Leads Default Created By</h5>
+                <ul>
+                    {% if default_created_by %}
+                    <p>
+                        username: {{ default_created_by.user.username }} 
+                    </p>
+                    <p>
+                        Nombres: {{default_created_by.user.first_name }} {{ default_created_by.user.last_name }} 
+                    </p>
+                    <p>
+                        Email: {{ default_created_by.user.email }}
+                    </p>
+                    <p>
+                        Organization: {{ organization.name }}
+                    </p>
+
+
+                    {% else %}
+                    <li>No hay agente seleccionado como Default Created By</li>
+                    {% endif %}
+                </ul>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<hr>
+<h2>Select Default Lead Agents</h2>
+
+<form method="post" action="{% url 'leads:leads_conf' %}">
+    {% csrf_token %}
+    <label for="created_by">Default Created By:</label>
+    <select name="created_by">
+        {% for agent in agents %}
+        <option value="{{ agent.id }}">{{ agent.get_full_name }}</option>
+        {% endfor %}
+    </select>
+    <br><br>
+    <label for="assigned_to">Default Assigned To:</label>
+    <select name="assigned_to">
+        {% for agent in agents %}
+        <option value="{{ agent.id }}">{{ agent.get_full_name }}</option>
+        {% endfor %}
+    </select>
+    <hr>
+    <input type="submit" value="Submit">
+</form>
+
+
+
+{% endblock %}
