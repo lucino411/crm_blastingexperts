@@ -7,7 +7,7 @@
 
 {% block content %}
 
-<h1>Leads Configuration</h1>
+<h1>Leads Configuration {{ organization.name }}</h1>
 <div class="card mb-3" style="max-width: 540px;">
     <div class="row g-0">
       <div class="col-md-12">
@@ -68,27 +68,44 @@
 </div>
 
 <hr>
-<h2>Select Default Lead Agents</h2>
 
-<form method="post" action="{% url 'leads:leads_conf' %}">
-    {% csrf_token %}
-    <label for="created_by">Default Created By:</label>
-    <select name="created_by">
-        {% for agent in agents %}
-        <option value="{{ agent.id }}">{{ agent.get_full_name }}</option>
-        {% endfor %}
-    </select>
-    <br><br>
-    <label for="assigned_to">Default Assigned To:</label>
-    <select name="assigned_to">
-        {% for agent in agents %}
-        <option value="{{ agent.id }}">{{ agent.get_full_name }}</option>
-        {% endfor %}
-    </select>
-    <hr>
-    <input type="submit" value="Submit">
-</form>
+<div class="w-50 p-3">
+    <form method="post" action="{% url 'leads:leads_conf' %}">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            <label for="assigned_to" class="form-label me-2">Select Default Assigned To Agent:</label>
+            <select name="assigned_to" class="form-select">
+                {% for agent in agents %}
+                <option value="{{ agent.id }}">{{ agent.get_full_name }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Submit" class="btn btn-secondary">
+        </div>
+    </form>
+</div>
+
+<hr>
+
+<div class="w-50 p-3">
+    <form method="post" action="{% url 'leads:leads_conf' %}">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+            <label for="created_by" class="form-label me-2">Select Default Created By Agent:</label>
+            <select name="created_by" class="form-select">
+                {% for agent in agents %}
+                <option value="{{ agent.id }}">{{ agent.get_full_name }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Submit" class="btn btn-secondary">
+        </div>
+    </form>
+</div>
+
+
+
+<br><br>
 
 
 
 {% endblock %}
+

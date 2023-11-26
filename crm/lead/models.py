@@ -17,15 +17,21 @@ def get_sentinel_user():
 
 class DefaultCreatedBy(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    organization = models.OneToOneField(Organization, on_delete=models.CASCADE)
+
 
     def __str__(self):
-        return f"{self.user.first_name} {self.user.last_name}"
+        # return f"{self.user.first_name} {self.user.last_name}"
+        return f"{self.user.first_name} {self.user.last_name} - {self.organization}"
+
 
 class DefaultAssignedTo(models.Model):
     user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    organization = models.OneToOneField(Organization, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.user.first_name} {self.user.last_name}"
+        # return f"{self.user.first_name} {self.user.last_name}"
+        return f"{self.user.first_name} {self.user.last_name} - {self.organization}"
 
 class Lead(models.Model):
     salutation = models.CharField(
